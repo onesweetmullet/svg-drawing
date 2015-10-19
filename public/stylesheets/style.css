@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background:#fff;
 }
@@ -14,7 +14,7 @@ div.container {
 
 svg#svgOne {
   display:block;
-  margin: 20px auto;
+  margin: 0px auto;
 }
 
 div.footer {
