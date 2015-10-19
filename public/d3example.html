@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-2.1.4.js" type="text/javascript"></script>
+        <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+    </head>
+    <body>
+        <div id="viz"></div>
+        <script type="text/javascript">
+
+            var sampleSVG = d3.select("#viz")
+                    .append("svg")
+                    .attr("width", 800)
+                    .attr("height", 800);
+
+            var isMouseDown = null;
+            $(document).mouseup(function(e) {
+                isMouseDown = null;
+            });
+
+            var _odd = true;
+            for (var x = 0; x < 800; x += 40) {
+
+                _odd = !_odd;
+
+                for (var y = 0; y < 800; y += 40) {
+
+                    _odd = !_odd;
+
+                    sampleSVG.append("rect")
+                            .style("stroke", "#ffffff")
+                            .style("stroke-width", 1)
+                            .style("fill", _odd === true ? "white" : "#eeeeee")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("width", 40)
+                            .attr("height", 40)
+                            .on("mousedown", function() {
+                                isMouseDown = true;
+                                d3.select(this).style("fill", "#333333");
+                            })
+                            .on("mouseover", function() {
+                                if (isMouseDown) {
+                                    d3.select(this).style("fill", "#333333");
+                                }
+                            });
+                            //.on("mouseover", function(){d3.select(this).style("fill", "#333333");})
+                            //.on("mouseout", function(){d3.select(this).style("fill", "white");});
+                }
+            }
+/*
+            sampleSVG.append("circle")
+                    .style("stroke", "gray")
+                    .style("fill", "white")
+                    .attr("r", 40)
+                    .attr("cx", 50)
+                    .attr("cy", 50)
+                    .on("mouseover", function(){d3.select(this).style("fill", "aliceblue");})
+                    .on("mouseout", function(){d3.select(this).style("fill", "white");});
+*/
+        </script>
+    </body>
+</html>
