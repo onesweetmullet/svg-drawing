@@ -7,6 +7,8 @@
       <link rel="stylesheet" href="stylesheets/spectrum.css"/>
       <link rel='stylesheet' href='/stylesheets/style.css' />
       <script>
+          var isMouseDown = null;
+
           $(document).ready(function() {
 
               $("#custom").spectrum({
@@ -14,30 +16,40 @@
               });
 
               var _rectangles = [];
-
               var svgns = "http://www.w3.org/2000/svg";
-              for (var x = 0; x < 800; x += 20) {
-                  for (var y = 0; y < 600; y += 20) {
-                      var rect = document.createElementNS(svgns, 'rect');
-                      rect.setAttributeNS(null, 'id', 'rect_' + x.toString() + '_' + y.toString());
-                      rect.setAttributeNS(null, 'x', x);
-                      rect.setAttributeNS(null, 'y', y);
-                      rect.setAttributeNS(null, 'height', '20');
-                      rect.setAttributeNS(null, 'width', '20');
-                      //rect.setAttributeNS(null, 'fill', '#'+Math.round(0xffffff * Math.random()).toString(16));
-                      rect.setAttributeNS(null, 'fill', '#ffffff');
-                      rect.setAttributeNS (null, 'stroke', "#000000");
-                      rect.setAttributeNS(null, 'stroke-width', 1);
-                      rect.setAttributeNS(null, 'onmousedown', 'onMouseDownObject(this)');
-                      rect.setAttributeNS(null, 'onmouseup', 'onMouseUpObject(this)');
-                      rect.setAttributeNS(null, 'onmouseover', 'onMouseOverObject(this)');
-                      rect.setAttributeNS(null, 'onmouseout', 'onMouseOutObject(this)');
 
-                      _rectangles.push(rect);
+                var drawGrid = function(boxWidth, boxHeight) {
 
-                      document.getElementById('svgOne').appendChild(rect);
-                  }
-              }
+                    document.getElementById('svgOne').innerHTML = '';
+                    _rectangles = [];
+
+                    for (var x = 0; x < 1000; x += Number(boxWidth)) {
+                        for (var y = 0; y < 1000; y += Number(boxHeight)) {
+                            var rect = document.createElementNS(svgns, 'rect');
+                            rect.setAttributeNS(null, 'id', 'rect_' + x.toString() + '_' + y.toString());
+                            rect.setAttributeNS(null, 'x', x);
+                            rect.setAttributeNS(null, 'y', y);
+                            rect.setAttributeNS(null, 'height', boxHeight);
+                            rect.setAttributeNS(null, 'width', boxWidth);
+                            //rect.setAttributeNS(null, 'fill', '#'+Math.round(0xffffff * Math.random()).toString(16));
+                            rect.setAttributeNS(null, 'fill', '#ffffff');
+                            rect.setAttributeNS (null, 'stroke', "#000000");
+                            rect.setAttributeNS(null, 'stroke-width', 1);
+                            rect.setAttributeNS(null, 'onmousedown', 'onMouseDownObject(this)');
+                            rect.setAttributeNS(null, 'onmouseup', 'onMouseUpObject(this)');
+                            rect.setAttributeNS(null, 'onmouseover', 'onMouseOverObject(this)');
+                            rect.setAttributeNS(null, 'onmouseout', 'onMouseOutObject(this)');
+
+                            _rectangles.push(rect);
+
+                            document.getElementById('svgOne').appendChild(rect);
+                        }
+                    }
+
+                };
+
+                drawGrid($('input#boxWidth').val(), $('input#boxHeight').val());
+
 
             $("input#showGrid").click(function() {
                 for (var i = 0; i < _rectangles.length; i++) {
@@ -45,9 +57,22 @@
                 }
 
             });
+
+              $('input#changeBoxSize').click(function() {
+                  //console.log($('input#boxWidth').val());
+                  drawGrid($('input#boxWidth').val(), $('input#boxHeight').val());
+              });
+
+              $(document).mouseup(function(e) {
+                  isMouseDown = null;
+              });
+
+
           });
 
-          var isMouseDown = null;
+
+
+
           function onMouseDownObject(obj) {
               isMouseDown = true;
               obj.setAttributeNS(null, 'fill', $("#custom").spectrum("get").toHexString());
@@ -66,13 +91,27 @@
 
           }
 
+
+
       </script>
   </head>
   <body>
-      <svg id="svgOne" xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+    <div class="container">
+        <svg id="svgOne" xmlns="http://www.w3.org/2000/svg" width="1000" height="1000">
 
-      </svg>
-      <div><input type='text' id="custom" /></div>
-      <div>Show grid: <input type="checkbox" id="showGrid" checked="true"/></div>
+        </svg>
+
+    </div>
+    <div class="footer">
+        <div class="divColorPicker"><input type='text' id="custom" /></div>
+        <div class="divShowGrid">Show grid: <input type="checkbox" id="showGrid" checked="true"/></div>
+        <div>
+            Box size:
+            <input type="text" id="boxWidth" value="40" />
+            x
+            <input type="text" id="boxHeight" value="20" />
+            <input type="button" id="changeBoxSize" value="Submit"/>
+        </div>
+    </div>
   </body>
 </html>

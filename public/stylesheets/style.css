@@ -1,8 +1,38 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background:#fff;
 }
 
 a {
   color: #00B7FF;
+}
+
+div.container {
+  margin:0 auto;
+}
+
+svg#svgOne {
+  display:block;
+  margin: 20px auto;
+}
+
+div.footer {
+  position:fixed;
+  bottom: 0px;
+  left: 0px;
+
+  background:#666666;
+  width:100%;
+  vertical-align: text-bottom;
+  padding: 20px 20px;
+}
+
+div.footer div {
+  float:left;
+}
+
+div.divShowGrid {
+  padding:5px 30px;
+  vertical-align: middle;
 }
